@@ -21,6 +21,7 @@ public class PlaneInsertForm {
     private Long companyId;
     @NotNull
     private Long typeId;
+    private boolean inMaintenance;
 
 
     public Plane toEntity(){

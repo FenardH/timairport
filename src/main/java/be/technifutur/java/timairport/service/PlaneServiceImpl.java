@@ -1,7 +1,6 @@
 package be.technifutur.java.timairport.service;
 
 import be.technifutur.java.timairport.exceptions.RessourceNotFoundException;
-import be.technifutur.java.timairport.mapper.PlaneMapper;
 import be.technifutur.java.timairport.model.dto.PlaneDTO;
 import be.technifutur.java.timairport.model.entity.Company;
 import be.technifutur.java.timairport.model.entity.Plane;
@@ -11,6 +10,10 @@ import be.technifutur.java.timairport.repository.CompanyRepository;
 import be.technifutur.java.timairport.repository.PlaneRepository;
 import be.technifutur.java.timairport.repository.TypePlaneRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class PlaneServiceImpl implements PlaneService {
@@ -56,4 +59,45 @@ public class PlaneServiceImpl implements PlaneService {
                 .orElseThrow( RessourceNotFoundException::new );
     }
 
+
+
+    @Override
+    public List<PlaneDTO> getAll() {
+        return planeRepository.findAll().stream()
+                .map( PlaneDTO::from )
+                .toList();
+    }
+
+//    @Override
+//    public void updateMaintenance(long id, boolean maintenance) {
+//        if (!planeRepository.existsById(id)) {
+//            throw new RessourceNotFoundException();
+//        }
+//        planeRepository.updateMaintenance(id, maintenance);
+//    }
+//
+//    @Override
+//    public void updateCompany(long idPlane, long idCompany) {
+//        if (!planeRepository.existsById(idPlane)) {
+//            throw new RessourceNotFoundException();
+//        }
+//        Company company = companyRepository.findById(idCompany).orElseThrow(RessourceNotFoundException::new);
+//        planeRepository.updateCompany(idPlane, company);
+//    }
+
+    @Override
+    public void update(long idPlane, Map<String, Object> updateData) {
+        if (updateData == null || updateData.isEmpty()) {return;}
+        Plane plane = planeRepository.findById(idPlane).orElseThrow(RessourceNotFoundException::new);
+        if (updateData.containsKey("companyId")) {
+            long companyId = (long)updateData.get("companyId");
+            Company company = companyRepository.findById(companyId).orElseThrow(RessourceNotFoundException::new);
+            plane.setCompany(company);
+        }
+        if (updateData.containsKey("inMaintenance")) {
+            plane.setInMaintenance((boolean) updateData.get("inMaintenance"));
+        }
+
+        planeRepository.save(plane);
+    }
 }
