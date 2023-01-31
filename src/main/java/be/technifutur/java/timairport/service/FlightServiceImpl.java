@@ -53,7 +53,7 @@ public class FlightServiceImpl implements FlightService{
         if (planes.isEmpty()){
             throw new NoPlaneAvailableException();
         }
-        if (form.getDepartureTime().isBefore(form.getArrivalTime().plusDays(2))) {
+        if (form.getArrivalTime().isBefore(form.getDepartureTime().plusDays(2))) {
             throw new RuntimeException("Arrival time should be after at least 2 days after depature time");
         }
         if (form.getIdDestinationAirport() == form.getIdDepartureAirport()) {
