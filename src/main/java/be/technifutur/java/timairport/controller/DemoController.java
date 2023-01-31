@@ -3,13 +3,13 @@ package be.technifutur.java.timairport.controller;
 import be.technifutur.java.timairport.model.form.DemoForm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpHeaders;
 import java.util.Map;
 
 @RestController
@@ -62,7 +62,7 @@ public class DemoController {
     @GetMapping("/header/all")
 //    public void displayAllHeaders(@RequestHeader MultiValueMap<String, String> headers) {
     public void displayAllHeaders(@RequestHeader HttpHeaders headers) {
-        headers.map().forEach(
+        headers.forEach(
                 (key, value) -> System.out.printf("%s : %s\n", key, value)
         );
     }

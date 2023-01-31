@@ -1,6 +1,8 @@
 package be.technifutur.java.timairport.mapper;
 
+import be.technifutur.java.timairport.model.dto.FlightDTO;
 import be.technifutur.java.timairport.model.dto.PlaneDTO;
+import be.technifutur.java.timairport.model.entity.Flight;
 import be.technifutur.java.timairport.model.entity.Plane;
 import be.technifutur.java.timairport.model.form.PlaneInsertForm;
 import org.springframework.stereotype.Service;
@@ -45,5 +47,4 @@ public class PlaneMapper {
 
         return entity;
     }
-
 }
