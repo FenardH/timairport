@@ -19,4 +19,6 @@ public interface PlaneService {
 //    void updateCompany(long idPlane, long idCompany);
 
     void update(long idPlane, Map<String, Object> params);
+
+    void delete(long id);
 }

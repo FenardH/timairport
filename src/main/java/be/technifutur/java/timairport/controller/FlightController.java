@@ -4,6 +4,7 @@ import be.technifutur.java.timairport.model.dto.FlightDTO;
 import be.technifutur.java.timairport.model.form.FlightInsertForm;
 import be.technifutur.java.timairport.service.FlightService;
 import jakarta.validation.Valid;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,8 @@ public class FlightController {
     }
 
     @PostMapping("/add")
-    public FlightDTO create(@RequestBody @Valid FlightInsertForm form){
+    public FlightDTO create(@RequestBody @Valid FlightInsertForm form, Model model){
+        model.addAttribute("form", "form");
         return flightService.create( form );
     }
 

@@ -1,4 +1,5 @@
 package be.technifutur.java.timairport.model.form;
+import be.technifutur.java.timairport.constraint.Not0;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
@@ -35,6 +36,7 @@ public class FlightInsertForm {
     private long idDesiredType;
 
     @NotNull
+    @Not0
     private long idDesiredCompany;
 
 }

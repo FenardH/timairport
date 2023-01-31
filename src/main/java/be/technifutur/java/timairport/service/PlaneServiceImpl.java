@@ -100,4 +100,9 @@ public class PlaneServiceImpl implements PlaneService {
 
         planeRepository.save(plane);
     }
+
+    @Override
+    public void delete(long id) {
+        planeRepository.deleteById(id);
+    }
 }

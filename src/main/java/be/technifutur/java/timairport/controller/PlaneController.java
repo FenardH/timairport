@@ -60,4 +60,9 @@ public class PlaneController {
 
         planeService.update(idPlane, mapValues);
     }
+
+    @DeleteMapping({"/{idPlane:[0-9]+}", "/{idPlane:[0-9]+}/delete"})
+    public void delete(@PathVariable long idPlane){
+
+    }
 }
