@@ -8,6 +8,7 @@ import be.technifutur.java.timairport.model.dto.PlaneDTO;
 import be.technifutur.java.timairport.model.entity.*;
 import be.technifutur.java.timairport.model.form.FlightInsertForm;
 import be.technifutur.java.timairport.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.Random;
 
 @Service
 public class FlightServiceImpl implements FlightService{
-    private final PlaneRepository planeRepository;
+
+    private  PlaneRepository planeRepository;
     private final CompanyRepository companyRepository;
     private final TypePlaneRepository typePlaneRepository;
     private final AirportRepository airportRepository;
