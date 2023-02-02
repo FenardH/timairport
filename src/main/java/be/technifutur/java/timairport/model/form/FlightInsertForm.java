@@ -1,5 +1,5 @@
 package be.technifutur.java.timairport.model.form;
-import be.technifutur.java.timairport.constraint.Not0;
+import be.technifutur.java.timairport.constraints.Not0;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
