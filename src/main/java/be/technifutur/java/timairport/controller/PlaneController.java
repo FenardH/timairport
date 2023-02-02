@@ -55,16 +55,16 @@ public class PlaneController {
             mapValues.put("companyId", Long.parseLong(params.get("companyId")));
         }
 
-
         if (params.containsKey("inMaintenance")) {
             mapValues.put("inMaintenance", Boolean.parseBoolean(params.get("inMaintenance")));
         }
 
         planeService.update(idPlane, mapValues);
     }
-
-    @DeleteMapping({"/{idPlane:[0-9]+}", "/{idPlane:[0-9]+}/delete"})
-    public void delete(@PathVariable long idPlane){
-
+    // /plane/9 OU
+    // /plane/9/delete
+    @DeleteMapping({"/{id:[0-9]+}", "/{id:[0-9]+}/delete"})
+    public void delete(@PathVariable long id){
+        planeService.delete(id);
     }
 }

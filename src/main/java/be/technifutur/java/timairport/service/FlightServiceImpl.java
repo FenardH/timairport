@@ -8,10 +8,11 @@ import be.technifutur.java.timairport.model.dto.PlaneDTO;
 import be.technifutur.java.timairport.model.entity.*;
 import be.technifutur.java.timairport.model.form.FlightInsertForm;
 import be.technifutur.java.timairport.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -81,4 +82,36 @@ public class FlightServiceImpl implements FlightService{
 
         return mapper.toDto(flight);
     }
+
+    @Override
+    public List<FlightDTO> getAllNonCancelled() {
+        return  flightRepository.findAllNonCancelled().stream()
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public void update(long idFlight, Map<String, Object> updateData) {
+        if (updateData == null || updateData.isEmpty()) {return;}
+        Flight flight = flightRepository.findById(idFlight).orElseThrow(RessourceNotFoundException::new);
+        if (updateData.containsKey("departureTime")) {
+            LocalDateTime departureTime = (LocalDateTime) updateData.get("departureTime");
+            flight.setDepartureTime(departureTime);
+        }
+
+        if (updateData.containsKey("arrivalTime")) {
+            LocalDateTime arrivalTime = (LocalDateTime) updateData.get("arrivalTime");
+            flight.setArrivalTime(arrivalTime);
+        }
+
+        flightRepository.save(flight);
+    }
+
+    @Override
+    public void delete(long idFlight) {
+        Flight flight = flightRepository.findById(idFlight).orElseThrow(RessourceNotFoundException::new);
+        flight.setCancelled(true);
+        flightRepository.save(flight);
+    }
+
 }

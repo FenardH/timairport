@@ -84,7 +84,7 @@ public class SecurityConfig {
 //                        .requestMatchers(request -> Objects.equals(request.getMethod(), "POST")).hasRole("ADMIN")
                         .requestMatchers("/plane/all").anonymous()
                         .requestMatchers("/plane/add").authenticated()
-                        .requestMatchers("/plane/{id:[0-9]+}/?pdate").hasRole("ROLE_ADMIN")
+                        .requestMatchers("/plane/{id:[0-9]+}/?pdate").hasRole("ADMIN")//.hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET,"/plane/*").hasAnyRole("ROLE", "ADMIN")
                         // .hasAnyAuthority("ROLE_USER", "ROLE_ADMIN"
                         .anyRequest().permitAll();
