@@ -1,9 +1,13 @@
 package be.technifutur.java.timairport.config;
 
+import be.technifutur.java.timairport.jwt.JwtAuthentificationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationObservationConvention;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,11 +36,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthentificationFilter jwtFilter) throws Exception {
 
         // configuration de securité
         http.csrf().disable();
-        http.httpBasic();
+        http.httpBasic().disable();
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //        http.authorizeHttpRequests().requestMatchers("/plane/add").permitAll().anyRequest().authenticated();
 //        http.authorizeHttpRequests().anyRequest().permitAll();
@@ -78,7 +84,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((authorize) -> {
                 authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/register").anonymous()
+                        .requestMatchers(HttpMethod.POST, "/auth/*").anonymous()
                         // via lambda
                         .requestMatchers(request -> request.getRequestURI().length() > 50).hasRole("ADMIN")
                         // via HttpMethod
@@ -121,4 +127,9 @@ public class SecurityConfig {
 //
 //        return new InMemoryUserDetailsManager(users);
 //    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 }
