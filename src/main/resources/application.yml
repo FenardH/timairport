@@ -8,3 +8,5 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss"

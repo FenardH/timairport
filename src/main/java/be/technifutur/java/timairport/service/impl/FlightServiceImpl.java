@@ -1,13 +1,13 @@
-package be.technifutur.java.timairport.service;
+package be.technifutur.java.timairport.service.impl;
 
 import be.technifutur.java.timairport.exceptions.NoPlaneAvailableException;
 import be.technifutur.java.timairport.exceptions.RessourceNotFoundException;
 import be.technifutur.java.timairport.mapper.FlightMapper;
 import be.technifutur.java.timairport.model.dto.FlightDTO;
-import be.technifutur.java.timairport.model.dto.PlaneDTO;
 import be.technifutur.java.timairport.model.entity.*;
 import be.technifutur.java.timairport.model.form.FlightInsertForm;
 import be.technifutur.java.timairport.repository.*;
+import be.technifutur.java.timairport.service.FlightService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
-public class FlightServiceImpl implements FlightService{
+public class FlightServiceImpl implements FlightService {
 
     private  PlaneRepository planeRepository;
     private final CompanyRepository companyRepository;

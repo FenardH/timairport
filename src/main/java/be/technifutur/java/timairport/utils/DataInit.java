@@ -17,13 +17,15 @@ public class DataInit implements InitializingBean {
     private final PilotRepository pilotRepository;
     private final AirportRepository airportRepository;
     private final PlaneRepository planeRepository;
+    private final UserRepository userRepository;
 
-    public DataInit(CompanyRepository companyRepository, TypePlaneRepository typePlaneRepository, PilotRepository pilotRepository, AirportRepository airportRepository, PlaneRepository planeRepository) {
+    public DataInit(CompanyRepository companyRepository, TypePlaneRepository typePlaneRepository, PilotRepository pilotRepository, AirportRepository airportRepository, PlaneRepository planeRepository, UserRepository userRepository) {
         this.companyRepository = companyRepository;
         this.typePlaneRepository = typePlaneRepository;
         this.pilotRepository = pilotRepository;
         this.airportRepository = airportRepository;
         this.planeRepository = planeRepository;
+        this.userRepository = userRepository;
     }
 
     @Override

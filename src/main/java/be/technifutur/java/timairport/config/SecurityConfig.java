@@ -78,35 +78,47 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((authorize) -> {
                 authorize
+                        .requestMatchers(HttpMethod.POST, "/auth/register").anonymous()
+                        // via lambda
                         .requestMatchers(request -> request.getRequestURI().length() > 50).hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
+                        // via HttpMethod
+//                        .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
                         // égale à la façon au-dessous
 //                        .requestMatchers(request -> Objects.equals(request.getMethod(), "POST")).hasRole("ADMIN")
+                        // via mapping d'URI
                         .requestMatchers("/plane/all").anonymous()
                         .requestMatchers("/plane/add").authenticated()
                         .requestMatchers("/plane/{id:[0-9]+}/?pdate").hasRole("ADMIN")//.hasAuthority("ROLE_ADMIN")
+                        // via HttpMethod + mapping d'URI
                         .requestMatchers(HttpMethod.GET,"/plane/*").hasAnyRole("ROLE", "ADMIN")
                         // .hasAnyAuthority("ROLE_USER", "ROLE_ADMIN"
+//                        .requestMatchers(HttpMethod.GET,"/flight/*").hasAnyRole("ROLE", "ADMIN")
+//                        .requestMatchers(HttpMethod.POST,"/flight/*").hasAnyRole( "ADMIN")
+//                        .requestMatchers(HttpMethod.PATCH,"/flight/*").hasAnyRole( "ADMIN")
+//                        .requestMatchers(HttpMethod.DELETE,"/flight/*").hasAnyRole("ADMIN")
                         .anyRequest().permitAll();
                 });
 
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        List<UserDetails> users = List.of(
-                User.builder()
-                        .username("user")
-                        .password(encoder.encode("pass"))
-                        .roles("USER")
-                        .build(),
-                User.builder()
-                        .username("admin")
-                        .password(encoder.encode("pass"))
-                        .roles("ADMIN", "USER")
-                        .build()
-        );
-        return new InMemoryUserDetailsManager(users);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+//        List<UserDetails> users = List.of(
+//                User.builder()
+//                        .username("user")
+//                        .password(encoder.encode("pass"))
+//                        .roles("USER")
+//                        .build(),
+//                User.builder()
+//                        .username("admin")
+//                        .password(encoder.encode("pass"))
+//                        .roles("ADMIN", "USER")
+//                        .build()
+//        );
+//
+//        users.forEach(u -> System.out.println(u.getPassword()));
+//
+//        return new InMemoryUserDetailsManager(users);
+//    }
 }

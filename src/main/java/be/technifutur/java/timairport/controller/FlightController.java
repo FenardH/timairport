@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
@@ -41,11 +42,11 @@ public class FlightController {
     public void update(@PathVariable long idFlight, @RequestParam Map<String, String> params) {
         Map<String, Object> mapValues = new HashMap<>();
         if (params.containsKey("departureTime")) {
-            mapValues.put("departureTime", LocalDate.parse(params.get("companyId"), formatter));
+            mapValues.put("departureTime", LocalDateTime.parse(params.get("departureTime"), formatter));
         }
 
         if (params.containsKey("arrivalTime")) {
-            mapValues.put("arrivalTime", LocalDate.parse(params.get("arrivalTime"), formatter));
+            mapValues.put("arrivalTime", LocalDateTime.parse(params.get("arrivalTime"), formatter));
         }
 
         flightService.update(idFlight, mapValues);
